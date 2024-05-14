@@ -15,14 +15,18 @@ function generateFakeUser() {
 // Generate an array of 10 fake user objects
 const fakeUsers = Array.from({ length: 3 }, generateFakeUser);
 
-Array.prototype.select = function(parameter) {
-  switch (parameter) {
+const select = (p: string, arr: any[]) => {
+  switch (p) {
     case '*':
-      return this;
-      break;
-    default:
-      return this.map((base) => base[parameter])
+      return {
+        where: (k: string, value: string) => {
+          return arr.filter(obj => obj[k] === value)
+        }
+      };
   }
 }
 
-console.log(fakeUsers.select('id'))
+
+const filtered = select('*', fakeUsers).where('id', fakeUsers[0].id)
+console.log(fakeUsers)
+console.log('yo', filtered);

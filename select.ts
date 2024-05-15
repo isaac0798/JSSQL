@@ -23,10 +23,15 @@ const select = (p: string, arr: any[]) => {
           return arr.filter(obj => obj[k] === value)
         }
       };
+    default:
+      return {
+        where: (k: string, value: string) => {
+          return arr.filter((obj) => obj[k] === value).map((obj) => obj[p]);
+        },
+      };
   }
 }
 
 
 const filtered = select('*', fakeUsers).where('id', fakeUsers[0].id)
-console.log(fakeUsers)
-console.log('yo', filtered);
+const filteredEmail = select('email', fakeUsers).where('id', fakeUsers[0].id);
